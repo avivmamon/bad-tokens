@@ -21,7 +21,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  */
 contract HighTaxToken is ERC20, Ownable {
     uint256 public buyTax = 0;
-    uint256 public sellTax = 55; // 55% tax
+    uint256 public sellTax = 65; // 65% tax
     address public taxWallet;
     address public uniswapPair;
 
