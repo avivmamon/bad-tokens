@@ -75,17 +75,17 @@ deploy() {
         --etherscan-api-key $ETHERSCAN_API_KEY"
     fi
 
-    cmd="$cmd --json"
+    cmd="$cmd -vv"
 
     # Capture output
-    local output=$(eval $cmd 2>&1)
+    local output=$(eval $cmd 2>&1 | tee /dev/tty)
     local exit_code=$?
 
     if [ $exit_code -eq 0 ]; then
         echo -e " ${GREEN}✓${NC}"
 
         # Try to extract contract address from output
-        local address=$(echo "$output" | grep -o "0x[a-fA-F0-9]\{40\}" | head -1)
+        local address=$(echo "$output" | grep -F "$name" | grep -o "0x[a-fA-F0-9]\{40\}" | head -1)
 
         if [ -n "$address" ]; then
             DEPLOYED_CONTRACTS+=("$name|$address")
