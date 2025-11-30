@@ -24,19 +24,28 @@ show_help() {
     echo ""
     echo "Options:"
     echo "  all                   Deploy all contracts"
-    echo "  a1                    Deploy specific contract by ID (e.g., a1, b2, c3)"
-    echo "  visual                Deploy all Visual Spoofing contracts (a1-a3)"
-    echo "  metadata              Deploy all Metadata Manipulation contracts (b1-b3)"
-    echo "  contract              Deploy all Contract Deception contracts (c1-c4)"
+    echo "  spoof1                Deploy Exact Name Spoof (USDC)"
+    echo "  spoof2                Deploy Homoglyph Token"
+    echo "  spoof3                Deploy Invisible Character Token"
+    echo "  metadata1             Deploy Malicious Name Token"
+    echo "  metadata2             Deploy Malicious Symbol Token"
+    echo "  metadata3             Deploy Malicious URI Token (NFT)"
+    echo "  honeypot1             Deploy Classic Honeypot"
+    echo "  honeypot2             Deploy Hidden Mint Token"
+    echo "  honeypot3             Deploy High Tax Token"
+    echo "  honeypot4             Deploy Hidden Restriction Token"
+    echo "  visual                Deploy all Visual Spoofing contracts"
+    echo "  metadata              Deploy all Metadata Manipulation contracts"
+    echo "  honeypot              Deploy all Honeypot contracts"
     echo "  help                 Show this help message"
     echo ""
     echo "Examples:"
     echo "  ./deploy.sh all           # Deploy everything"
-    echo "  ./deploy.sh a1            # Deploy Exact Name Spoof only"
-    echo "  ./deploy.sh b2            # Deploy Malicious Symbol Token"
+    echo "  ./deploy.sh spoof1        # Deploy Exact Name Spoof only"
+    echo "  ./deploy.sh metadata2     # Deploy Malicious Symbol Token"
     echo "  ./deploy.sh visual        # Deploy all visual spoofing variants"
     echo "  ./deploy.sh metadata      # Deploy all metadata manipulation tokens"
-    echo "  ./deploy.sh contract      # Deploy all contract deception tokens"
+    echo "  ./deploy.sh honeypot      # Deploy all honeypot tokens"
     echo ""
 }
 
@@ -129,85 +138,85 @@ case "$1" in
     all)
         echo -e "${GREEN}Deploying ALL contracts...${NC}\n"
 
-        deploy "deploy_a1()" "a1 - Exact Name Spoof"
-        deploy "deploy_a2()" "a2 - Homoglyph Token"
-        deploy "deploy_a3()" "a3 - Invisible Char Token"
-        deploy "deploy_b1()" "b1 - Malicious Name Token"
-        deploy "deploy_b2()" "b2 - Malicious Symbol Token"
-        deploy "deploy_b3()" "b3 - Malicious URI Token (NFT)"
-        deploy "deploy_c1()" "c1 - Classic Honeypot"
-        deploy "deploy_c2()" "c2 - Hidden Mint Token"
-        deploy "deploy_c3()" "c3 - High Tax Token"
-        deploy "deploy_c4()" "c4 - Hidden Restriction Token"
+        deploy "deploy_spoof1()" "spoof1 - Exact Name Spoof"
+        deploy "deploy_spoof2()" "spoof2 - Homoglyph Token"
+        deploy "deploy_spoof3()" "spoof3 - Invisible Char Token"
+        deploy "deploy_metadata1()" "metadata1 - Malicious Name Token"
+        deploy "deploy_metadata2()" "metadata2 - Malicious Symbol Token"
+        deploy "deploy_metadata3()" "metadata3 - Malicious URI Token (NFT)"
+        deploy "deploy_honeypot1()" "honeypot1 - Classic Honeypot"
+        deploy "deploy_honeypot2()" "honeypot2 - Hidden Mint Token"
+        deploy "deploy_honeypot3()" "honeypot3 - High Tax Token"
+        deploy "deploy_honeypot4()" "honeypot4 - Hidden Restriction Token"
 
         show_summary
         ;;
 
     # Individual contract deployments
-    a1)
-        deploy "deploy_a1()" "a1 - Exact Name Spoof"
+    spoof1)
+        deploy "deploy_spoof1()" "spoof1 - Exact Name Spoof"
         show_summary
         ;;
-    a2)
-        deploy "deploy_a2()" "a2 - Homoglyph Token"
+    spoof2)
+        deploy "deploy_spoof2()" "spoof2 - Homoglyph Token"
         show_summary
         ;;
-    a3)
-        deploy "deploy_a3()" "a3 - Invisible Char Token"
+    spoof3)
+        deploy "deploy_spoof3()" "spoof3 - Invisible Char Token"
         show_summary
         ;;
-    b1)
-        deploy "deploy_b1()" "b1 - Malicious Name Token"
+    metadata1)
+        deploy "deploy_metadata1()" "metadata1 - Malicious Name Token"
         show_summary
         ;;
-    b2)
-        deploy "deploy_b2()" "b2 - Malicious Symbol Token"
+    metadata2)
+        deploy "deploy_metadata2()" "metadata2 - Malicious Symbol Token"
         show_summary
         ;;
-    b3)
-        deploy "deploy_b3()" "b3 - Malicious URI Token (NFT)"
+    metadata3)
+        deploy "deploy_metadata3()" "metadata3 - Malicious URI Token (NFT)"
         show_summary
         ;;
-    c1)
-        deploy "deploy_c1()" "c1 - Classic Honeypot"
+    honeypot1)
+        deploy "deploy_honeypot1()" "honeypot1 - Classic Honeypot"
         show_summary
         ;;
-    c2)
-        deploy "deploy_c2()" "c2 - Hidden Mint Token"
+    honeypot2)
+        deploy "deploy_honeypot2()" "honeypot2 - Hidden Mint Token"
         show_summary
         ;;
-    c3)
-        deploy "deploy_c3()" "c3 - High Tax Token"
+    honeypot3)
+        deploy "deploy_honeypot3()" "honeypot3 - High Tax Token"
         show_summary
         ;;
-    c4)
-        deploy "deploy_c4()" "c4 - Hidden Restriction Token"
+    honeypot4)
+        deploy "deploy_honeypot4()" "honeypot4 - Hidden Restriction Token"
         show_summary
         ;;
 
     # Category deployments
     visual)
-        echo -e "${GREEN}Deploying Visual Spoofing contracts (a1-a3)...${NC}\n"
-        deploy "deploy_a1()" "a1 - Exact Name Spoof"
-        deploy "deploy_a2()" "a2 - Homoglyph Token"
-        deploy "deploy_a3()" "a3 - Invisible Char Token"
+        echo -e "${GREEN}Deploying Visual Spoofing contracts...${NC}\n"
+        deploy "deploy_spoof1()" "spoof1 - Exact Name Spoof"
+        deploy "deploy_spoof2()" "spoof2 - Homoglyph Token"
+        deploy "deploy_spoof3()" "spoof3 - Invisible Char Token"
         show_summary
         ;;
 
     metadata)
-        echo -e "${GREEN}Deploying Metadata Manipulation contracts (b1-b3)...${NC}\n"
-        deploy "deploy_b1()" "b1 - Malicious Name Token"
-        deploy "deploy_b2()" "b2 - Malicious Symbol Token"
-        deploy "deploy_b3()" "b3 - Malicious URI Token (NFT)"
+        echo -e "${GREEN}Deploying Metadata Manipulation contracts...${NC}\n"
+        deploy "deploy_metadata1()" "metadata1 - Malicious Name Token"
+        deploy "deploy_metadata2()" "metadata2 - Malicious Symbol Token"
+        deploy "deploy_metadata3()" "metadata3 - Malicious URI Token (NFT)"
         show_summary
         ;;
 
-    contract)
-        echo -e "${GREEN}Deploying Contract Deception tokens (c1-c4)...${NC}\n"
-        deploy "deploy_c1()" "c1 - Classic Honeypot"
-        deploy "deploy_c2()" "c2 - Hidden Mint Token"
-        deploy "deploy_c3()" "c3 - High Tax Token"
-        deploy "deploy_c4()" "c4 - Hidden Restriction Token"
+    honeypot)
+        echo -e "${GREEN}Deploying Honeypot tokens...${NC}\n"
+        deploy "deploy_honeypot1()" "honeypot1 - Classic Honeypot"
+        deploy "deploy_honeypot2()" "honeypot2 - Hidden Mint Token"
+        deploy "deploy_honeypot3()" "honeypot3 - High Tax Token"
+        deploy "deploy_honeypot4()" "honeypot4 - Hidden Restriction Token"
         show_summary
         ;;
 

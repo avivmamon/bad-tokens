@@ -39,15 +39,15 @@ forge build
 # Deploy all contracts
 ./deploy.sh all
 
-# Deploy specific contract by ID
-./deploy.sh a1    # Exact Name Spoof
-./deploy.sh b2    # Malicious Symbol Token
-./deploy.sh c4    # Hidden Restriction Token
+# Deploy specific contract
+./deploy.sh spoof1      # Exact Name Spoof
+./deploy.sh metadata2   # Malicious Symbol Token
+./deploy.sh honeypot4   # Hidden Restriction Token
 
 # Deploy by category
-./deploy.sh visual      # All Visual Spoofing (a1-a3)
-./deploy.sh metadata    # All Metadata Manipulation (b1-b3)
-./deploy.sh contract    # All Contract Deception (c1-c4)
+./deploy.sh visual      # All Visual Spoofing (spoof1-3)
+./deploy.sh metadata    # All Metadata Manipulation (metadata1-3)
+./deploy.sh honeypot    # All Honeypot tokens (honeypot1-4)
 
 # Show help
 ./deploy.sh help
@@ -55,29 +55,18 @@ forge build
 
 ## Implemented Contracts
 
-### Visual Spoofing (a)
-- **a1** - Exact Name Spoof
-- **a2** - Homoglyph Token
-- **a3** - Invisible Char Token
+### Visual Spoofing
+- **spoof1** - Exact Name Spoof (USDC)
+- **spoof2** - Homoglyph Token (Cyrillic characters)
+- **spoof3** - Invisible Character Token (zero-width spaces)
 
-### Metadata Manipulation (b)
-- **b1** - Malicious Name Token (URL in name)
-- **b2** - Malicious Symbol Token (URL in symbol)
-- **b3** - Malicious URI Token (NFT with malicious image)
+### Metadata Manipulation
+- **metadata1** - Malicious Name Token (URL in name)
+- **metadata2** - Malicious Symbol Token (URL in symbol)
+- **metadata3** - Malicious URI Token (NFT with malicious image)
 
-### Contract Deception (c)
-- **c1** - Classic Honeypot (cannot sell)
-- **c2** - Hidden Mint Token (unlimited supply)
-- **c3** - High Tax Token (>50% tax)
-- **c4** - Hidden Restriction Token (1000 block sell lock)
-
-## Structure
-
-```
-.
-├── src/               # All contracts in flat structure
-├── script/
-│   └── DeployAll.s.sol
-├── deploy.sh
-└── foundry.toml
-```
+### Honeypot / Contract Deception
+- **honeypot1** - Classic Honeypot (cannot sell, 10% distributed to holders)
+- **honeypot2** - Hidden Mint Token (unlimited supply via disguised function)
+- **honeypot3** - High Tax Token (65% sell tax)
+- **honeypot4** - Hidden Restriction Token (1000 block sell lock, wallet limits)

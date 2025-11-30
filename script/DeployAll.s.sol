@@ -92,31 +92,31 @@ contract DeployAll is Script {
     }
 
     // Deploy specific contracts by ID
-    function deploy_a1() public {
+    function deploy_spoof1() public {
         // Exact Name Spoof - USDC
         vm.startBroadcast(deployerPrivateKey);
         SpoofToken token = new SpoofToken("USD Coin", "USDC", 1_000_000 * 1e18);
-        console.log("a1 - Exact Name Spoof:", address(token));
+        console.log("spoof1 - Exact Name Spoof:", address(token));
         vm.stopBroadcast();
     }
 
-    function deploy_a2() public {
+    function deploy_spoof2() public {
         // Homoglyph Token - Cyrillic S
         vm.startBroadcast(deployerPrivateKey);
         SpoofToken token = new SpoofToken("USD Coin", unicode"UЅDC", 1_000_000 * 1e18);
-        console.log("a2 - Homoglyph Token:", address(token));
+        console.log("spoof2 - Homoglyph Token:", address(token));
         vm.stopBroadcast();
     }
 
-    function deploy_a3() public {
+    function deploy_spoof3() public {
         // Invisible Char Token - Zero Width Space
         vm.startBroadcast(deployerPrivateKey);
         SpoofToken token = new SpoofToken("USD Coin", unicode"U​SDC", 1_000_000 * 1e18);
-        console.log("a3 - Invisible Char Token:", address(token));
+        console.log("spoof3 - Invisible Char Token:", address(token));
         vm.stopBroadcast();
     }
 
-    function deploy_b1() public {
+    function deploy_metadata1() public {
         // Malicious Name Token - URL in token name
         vm.startBroadcast(deployerPrivateKey);
         MaliciousNameToken token = new MaliciousNameToken(
@@ -124,11 +124,11 @@ contract DeployAll is Script {
             "REWARD",
             1_000_000 * 1e18
         );
-        console.log("b1 - Malicious Name Token:", address(token));
+        console.log("metadata1 - Malicious Name Token:", address(token));
         vm.stopBroadcast();
     }
 
-    function deploy_b2() public {
+    function deploy_metadata2() public {
         // Malicious Symbol Token - URL in token symbol
         vm.startBroadcast(deployerPrivateKey);
         MaliciousSymbolToken token = new MaliciousSymbolToken(
@@ -136,11 +136,11 @@ contract DeployAll is Script {
             "claim-airdrop-fake-dapp.vercel.app",
             1_000_000 * 1e18
         );
-        console.log("b2 - Malicious Symbol Token:", address(token));
+        console.log("metadata2 - Malicious Symbol Token:", address(token));
         vm.stopBroadcast();
     }
 
-    function deploy_b3() public {
+    function deploy_metadata3() public {
         // Malicious URI Token - NFT with malicious image URI
         vm.startBroadcast(deployerPrivateKey);
         MaliciousURIToken token = new MaliciousURIToken(
@@ -148,17 +148,17 @@ contract DeployAll is Script {
             "REWARDS",
             "https://i.imgur.com/j9tEF9M.png"
         );
-        console.log("b3 - Malicious URI Token (NFT):", address(token));
+        console.log("metadata3 - Malicious URI Token (NFT):", address(token));
         token.mint(deployer);
         console.log("  - Minted NFT to deployer");
         vm.stopBroadcast();
     }
 
-    function deploy_c1() public {
+    function deploy_honeypot1() public {
         setUp();
         vm.startBroadcast(deployerPrivateKey);
         HoneypotToken hp = new HoneypotToken(1_000_000 * 1e18);
-        console.log("c1 - Classic Honeypot:", address(hp));
+        console.log("honeypot1 - Classic Honeypot:", address(hp));
         _createPairAndAddLiquidity(address(hp));
         address hpPair = factory.getPair(address(hp), weth);
         if (hpPair != address(0)) {
@@ -167,20 +167,20 @@ contract DeployAll is Script {
         vm.stopBroadcast();
     }
 
-    function deploy_c2() public {
+    function deploy_honeypot2() public {
         setUp();
         vm.startBroadcast(deployerPrivateKey);
         HiddenMintToken hm = new HiddenMintToken(1_000_000 * 1e18);
-        console.log("c2 - Hidden Mint Token:", address(hm));
+        console.log("honeypot2 - Hidden Mint Token:", address(hm));
         _createPairAndAddLiquidity(address(hm));
         vm.stopBroadcast();
     }
 
-    function deploy_c3() public {
+    function deploy_honeypot3() public {
         setUp();
         vm.startBroadcast(deployerPrivateKey);
         HighTaxToken ht = new HighTaxToken(1_000_000 * 1e18, deployer);
-        console.log("c3 - High Tax Token:", address(ht));
+        console.log("honeypot3 - High Tax Token:", address(ht));
         _createPairAndAddLiquidity(address(ht));
         address htPair = factory.getPair(address(ht), weth);
         if (htPair != address(0)) {
@@ -189,11 +189,11 @@ contract DeployAll is Script {
         vm.stopBroadcast();
     }
 
-    function deploy_c4() public {
+    function deploy_honeypot4() public {
         setUp();
         vm.startBroadcast(deployerPrivateKey);
         HiddenRestrictionToken hr = new HiddenRestrictionToken(1_000_000 * 1e18);
-        console.log("c4 - Hidden Restriction Token:", address(hr));
+        console.log("honeypot4 - Hidden Restriction Token:", address(hr));
         _createPairAndAddLiquidity(address(hr));
         address hrPair = factory.getPair(address(hr), weth);
         if (hrPair != address(0)) {
@@ -205,45 +205,45 @@ contract DeployAll is Script {
     function deployVisualSpoofing() internal {
         console.log("\n--- Category A: Visual Spoofing ---");
 
-        // a1 - Exact Name Spoof
+        // spoof1 - Exact Name Spoof
         SpoofToken spoof1 = new SpoofToken("USD Coin", "USDC", 1_000_000 * 1e18);
-        _trackContract(address(spoof1), "a1 - Exact Name Spoof");
+        _trackContract(address(spoof1), "spoof1 - Exact Name Spoof");
 
-        // a2 - Homoglyph Token (Cyrillic S)
+        // spoof2 - Homoglyph Token (Cyrillic S)
         SpoofToken spoof2 = new SpoofToken("USD Coin", unicode"UЅDC", 1_000_000 * 1e18);
-        _trackContract(address(spoof2), "a2 - Homoglyph Token");
+        _trackContract(address(spoof2), "spoof2 - Homoglyph Token");
 
-        // a3 - Invisible Char Token (Zero Width Space)
+        // spoof3 - Invisible Char Token (Zero Width Space)
         SpoofToken spoof3 = new SpoofToken("USD Coin", unicode"U​SDC", 1_000_000 * 1e18);
-        _trackContract(address(spoof3), "a3 - Invisible Char Token");
+        _trackContract(address(spoof3), "spoof3 - Invisible Char Token");
     }
 
     function deployMetadataManipulation() internal {
         console.log("\n--- Category B: Metadata Manipulation ---");
 
-        // b1 - Malicious Name Token
+        // metadata1 - Malicious Name Token
         MaliciousNameToken malName = new MaliciousNameToken(
             "Claim Reward Visit claim-airdrop-fake-dapp.vercel.app",
             "REWARD",
             1_000_000 * 1e18
         );
-        _trackContract(address(malName), "b1 - Malicious Name Token");
+        _trackContract(address(malName), "metadata1 - Malicious Name Token");
 
-        // b2 - Malicious Symbol Token
+        // metadata2 - Malicious Symbol Token
         MaliciousSymbolToken malSymbol = new MaliciousSymbolToken(
             "Airdrop Token",
             "claim-airdrop-fake-dapp.vercel.app",
             1_000_000 * 1e18
         );
-        _trackContract(address(malSymbol), "b2 - Malicious Symbol Token");
+        _trackContract(address(malSymbol), "metadata2 - Malicious Symbol Token");
 
-        // b3 - Malicious URI Token (NFT)
+        // metadata3 - Malicious URI Token (NFT)
         MaliciousURIToken malURI = new MaliciousURIToken(
             "Exclusive Rewards Club",
             "REWARDS",
             "https://i.imgur.com/j9tEF9M.png"
         );
-        _trackContract(address(malURI), "b3 - Malicious URI Token (NFT)");
+        _trackContract(address(malURI), "metadata3 - Malicious URI Token (NFT)");
         malURI.mint(deployer);
         console.log("  - Minted NFT to deployer");
     }
@@ -255,32 +255,32 @@ contract DeployAll is Script {
         NormalToken normal = new NormalToken(1_000_000 * 1e18);
         _trackContract(address(normal), "control - Normal Token");
 
-        // c1 - Classic Honeypot
+        // honeypot1 - Classic Honeypot
         HoneypotToken hp = new HoneypotToken(1_000_000 * 1e18);
-        _trackContract(address(hp), "c1 - Classic Honeypot");
+        _trackContract(address(hp), "honeypot1 - Classic Honeypot");
         _createPairAndAddLiquidity(address(hp));
         address hpPair = factory.getPair(address(hp), weth);
         if (hpPair != address(0)) {
             hp.setUniswapPair(hpPair);
         }
 
-        // c2 - Hidden Mint Token
+        // honeypot2 - Hidden Mint Token
         HiddenMintToken hm = new HiddenMintToken(1_000_000 * 1e18);
-        _trackContract(address(hm), "c2 - Hidden Mint Token");
+        _trackContract(address(hm), "honeypot2 - Hidden Mint Token");
         _createPairAndAddLiquidity(address(hm));
 
-        // c3 - High Tax Token
+        // honeypot3 - High Tax Token
         HighTaxToken ht = new HighTaxToken(1_000_000 * 1e18, deployer);
-        _trackContract(address(ht), "c3 - High Tax Token");
+        _trackContract(address(ht), "honeypot3 - High Tax Token");
         _createPairAndAddLiquidity(address(ht));
         address htPair = factory.getPair(address(ht), weth);
         if (htPair != address(0)) {
             ht.setUniswapPair(htPair);
         }
 
-        // c4 - Hidden Restriction Token
+        // honeypot4 - Hidden Restriction Token
         HiddenRestrictionToken hr = new HiddenRestrictionToken(1_000_000 * 1e18);
-        _trackContract(address(hr), "c4 - Hidden Restriction Token");
+        _trackContract(address(hr), "honeypot4 - Hidden Restriction Token");
         _createPairAndAddLiquidity(address(hr));
         address hrPair = factory.getPair(address(hr), weth);
         if (hrPair != address(0)) {

