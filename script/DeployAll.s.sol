@@ -159,7 +159,8 @@ contract DeployAll is Script {
         vm.startBroadcast(deployerPrivateKey);
         HoneypotToken hp = new HoneypotToken(1_000_000 * 1e18);
         console.log("honeypot1 - Classic Honeypot:", address(hp));
-        _createPairAndAddLiquidity(address(hp));
+        // 1.5$ worth of ETH at 2833.36 $/ETH is approx 0.0005294 ETH
+        _createPairAndAddLiquidity(address(hp), 0.00053 ether);
         address hpPair = factory.getPair(address(hp), weth);
         if (hpPair != address(0)) {
             hp.setUniswapPair(hpPair);
@@ -172,7 +173,7 @@ contract DeployAll is Script {
         vm.startBroadcast(deployerPrivateKey);
         HiddenMintToken hm = new HiddenMintToken(1_000_000 * 1e18);
         console.log("honeypot2 - Hidden Mint Token:", address(hm));
-        _createPairAndAddLiquidity(address(hm));
+        _createPairAndAddLiquidity(address(hm), 0.00001 ether);
         vm.stopBroadcast();
     }
 
@@ -181,7 +182,7 @@ contract DeployAll is Script {
         vm.startBroadcast(deployerPrivateKey);
         HighTaxToken ht = new HighTaxToken(1_000_000 * 1e18, deployer);
         console.log("honeypot3 - High Tax Token:", address(ht));
-        _createPairAndAddLiquidity(address(ht));
+        _createPairAndAddLiquidity(address(ht), 0.00001 ether);
         address htPair = factory.getPair(address(ht), weth);
         if (htPair != address(0)) {
             ht.setUniswapPair(htPair);
@@ -194,7 +195,7 @@ contract DeployAll is Script {
         vm.startBroadcast(deployerPrivateKey);
         HiddenRestrictionToken hr = new HiddenRestrictionToken(1_000_000 * 1e18);
         console.log("honeypot4 - Hidden Restriction Token:", address(hr));
-        _createPairAndAddLiquidity(address(hr));
+        _createPairAndAddLiquidity(address(hr), 0.00001 ether);
         address hrPair = factory.getPair(address(hr), weth);
         if (hrPair != address(0)) {
             hr.setUniswapPair(hrPair);
@@ -258,7 +259,7 @@ contract DeployAll is Script {
         // honeypot1 - Classic Honeypot
         HoneypotToken hp = new HoneypotToken(1_000_000 * 1e18);
         _trackContract(address(hp), "honeypot1 - Classic Honeypot");
-        _createPairAndAddLiquidity(address(hp));
+        _createPairAndAddLiquidity(address(hp), 0.00003 ether);
         address hpPair = factory.getPair(address(hp), weth);
         if (hpPair != address(0)) {
             hp.setUniswapPair(hpPair);
@@ -267,12 +268,12 @@ contract DeployAll is Script {
         // honeypot2 - Hidden Mint Token
         HiddenMintToken hm = new HiddenMintToken(1_000_000 * 1e18);
         _trackContract(address(hm), "honeypot2 - Hidden Mint Token");
-        _createPairAndAddLiquidity(address(hm));
+        _createPairAndAddLiquidity(address(hm), 0.00001 ether);
 
         // honeypot3 - High Tax Token
         HighTaxToken ht = new HighTaxToken(1_000_000 * 1e18, deployer);
         _trackContract(address(ht), "honeypot3 - High Tax Token");
-        _createPairAndAddLiquidity(address(ht));
+        _createPairAndAddLiquidity(address(ht), 0.00001 ether);
         address htPair = factory.getPair(address(ht), weth);
         if (htPair != address(0)) {
             ht.setUniswapPair(htPair);
@@ -281,17 +282,17 @@ contract DeployAll is Script {
         // honeypot4 - Hidden Restriction Token
         HiddenRestrictionToken hr = new HiddenRestrictionToken(1_000_000 * 1e18);
         _trackContract(address(hr), "honeypot4 - Hidden Restriction Token");
-        _createPairAndAddLiquidity(address(hr));
+        _createPairAndAddLiquidity(address(hr), 0.00001 ether);
         address hrPair = factory.getPair(address(hr), weth);
         if (hrPair != address(0)) {
             hr.setUniswapPair(hrPair);
         }
     }
 
-    function _createPairAndAddLiquidity(address token) internal {
+    function _createPairAndAddLiquidity(address token, uint256 ethAmount) internal {
         ERC20(token).approve(address(router), type(uint256).max);
 
-        try router.addLiquidityETH{value: 0.00001 ether}(
+        try router.addLiquidityETH{value: ethAmount}(
             token,
             1000 * 1e18,
             0,
@@ -300,6 +301,8 @@ contract DeployAll is Script {
             block.timestamp + 300
         ) {
             console.log("  - Liquidity added");
+            address pair = factory.getPair(token, weth);
+            console.log("  - Pair address:", pair);
 
             address[] memory path = new address[](2);
             path[0] = token;
