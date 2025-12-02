@@ -120,8 +120,8 @@ contract DeployAll is Script {
         // Malicious Name Token - URL in token name
         vm.startBroadcast(deployerPrivateKey);
         MaliciousNameToken token = new MaliciousNameToken(
-            "Claim Reward Visit claim-airdrop-fake-dapp.vercel.app",
-            "REWARD",
+            "MaliciousDrainer Contract",
+            "DRAINER",
             1_000_000 * 1e18
         );
         console.log("metadata1 - Malicious Name Token:", address(token));
